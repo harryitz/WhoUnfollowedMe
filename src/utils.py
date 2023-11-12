@@ -1,11 +1,15 @@
 import json
 from prettytable import PrettyTable
+import os.path
 
 def saveCache(cache) -> None:
     with open('cache.json', 'w') as file:
         file.write(json.dumps(cache))
         
 def getChange(newFollowers):
+    if not os.path.isfile('cache.json'):
+        return list(newFollowers)
+    
     file = open('cache.json', 'r')
     cache = json.loads(file.read())
     oldFollowers = cache['followers'].split(', ')
